@@ -1,0 +1,49 @@
+name: repair_v1
+version: "1.0.0"
+description: >
+  Repair prompt used when a model response fails schema validation. Feeds the exact
+  validation errors back so the retry is corrective rather than a blind resample.
+input_variables:
+  - output_schema
+  - errors
+  - raw_output
+
+system: |
+  You correct malformed JSON so that it satisfies a schema. You return only the
+  corrected JSON object — no explanation, no markdown fences.
+
+# Two rules here are the difference between a repair and a resample.
+#
+# "Preserve every value that was already valid" stops the model rewriting the
+# whole analysis on retry, which would discard correct, grounded work and produce
+# a different verdict each attempt.
+#
+# "Do not invent content" stops the obvious failure mode: told that `evidence`
+# must be non-empty, a model will cheerfully fabricate a quote. Empty-plus-honest
+# is recoverable; fabricated-plus-well-formed is not.
+template: |
+  Your previous response did not satisfy the required schema.
+
+  # VALIDATION ERRORS
+
+  {errors}
+
+  # YOUR PREVIOUS RESPONSE
+
+  {raw_output}
+
+  # REQUIRED JSON SCHEMA
+
+  {output_schema}
+
+  # INSTRUCTIONS
+
+  1. Fix ONLY what the validation errors identify.
+  2. Preserve every value that was already valid — do not re-analyse and do not
+     change conclusions that were not flagged.
+  3. Do NOT invent content to satisfy a constraint. If a required field has no
+     support in what you were originally given, use "Not Found" for text or an
+     empty list where the schema permits one.
+  4. Respect every type and range constraint: integer scores are 0-100, confidence
+     is a decimal between 0.0 and 1.0.
+  5. Return the corrected JSON object and nothing else.

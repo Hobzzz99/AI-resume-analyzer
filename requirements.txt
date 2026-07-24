@@ -1,0 +1,39 @@
+# ---------------------------------------------------------------------------
+# Runtime dependencies for resume-rag.
+#
+# Lower bounds only: this project is meant to be cloned and run against a
+# current package index. Exact pins belong in a lockfile (uv/pip-tools), not in
+# a portfolio requirements file that would rot within a quarter.
+# ---------------------------------------------------------------------------
+
+# --- Web service -----------------------------------------------------------
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+python-multipart>=0.0.12          # multipart/form-data uploads
+sse-starlette>=2.1.0              # Server-Sent Events for /analyze/stream
+
+# --- Configuration & validation --------------------------------------------
+pydantic>=2.9.0
+pydantic-settings>=2.6.0
+python-dotenv>=1.0.1
+PyYAML>=6.0.2                     # file-backed prompt templates
+
+# --- LangChain -------------------------------------------------------------
+langchain>=0.3.7
+langchain-core>=0.3.15
+langchain-community>=0.3.5        # PyPDFLoader
+langchain-groq>=0.2.1             # ChatGroq
+google-genai>=1.0.0               # Gemini provider (alternative to Groq)
+langchain-text-splitters>=0.3.2   # RecursiveCharacterTextSplitter
+
+# --- Retrieval stack -------------------------------------------------------
+chromadb>=0.5.20
+sentence-transformers>=3.3.0      # all-MiniLM-L6-v2 + optional cross-encoder
+rank-bm25>=0.2.2                  # lexical half of hybrid search
+pypdf>=5.1.0                      # PDF text extraction backend
+
+# --- HTTP client (used by scripts/ and the test client) --------------------
+httpx>=0.27.2
+
+# --- Tooling used by scripts/ ----------------------------------------------
+reportlab>=4.2.5                  # generates the sample PDFs

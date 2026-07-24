@@ -1,0 +1,75 @@
+[project]
+name = "resume-rag"
+version = "1.0.0"
+description = "A modular Retrieval-Augmented Generation engine, demonstrated by an AI Resume Analyzer."
+requires-python = ">=3.12"
+readme = "README.md"
+
+# Dependencies are declared in requirements.txt / requirements-dev.txt so the
+# project installs with plain pip in any environment. This file exists for tool
+# configuration, which is where it earns its keep.
+
+[tool.pytest.ini_options]
+testpaths = ["app/tests"]
+pythonpath = ["."]
+addopts = "-q --strict-markers -m 'not integration'"
+markers = [
+    "integration: requires network access, a Groq API key, or a model download (deselected by default)",
+]
+asyncio_default_fixture_loop_scope = "function"
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+# BLE and PLC0415 are enabled deliberately: blanket excepts and function-local
+# imports are both used in this codebase, but only in specific places with a
+# stated reason. Enabling the rules makes each `# noqa` an explicit, reviewable
+# decision instead of an unchecked habit.
+select = [
+    "E", "F", "I", "N", "UP", "B", "C4", "SIM", "ARG", "PTH", "RUF", "D",
+    "BLE", "PLC0415",
+]
+ignore = [
+    "D107",   # __init__ docstring: the class docstring covers it
+    "D203",   # incompatible with D211
+    "D213",   # incompatible with D212
+    "RUF001", # en dashes and typographic quotes are intentional in prose and
+    "RUF002", # in the text-normalisation tables, which map them deliberately
+    "UP046",  # PEP 695 generics: pydantic's generic support is better exercised
+              # through Generic[T], and the explicit TypeVar is self-documenting
+    "D105",   # dunder methods (__len__, __enter__, __repr__) restate their name
+]
+
+[tool.ruff.lint.per-file-ignores]
+# Test classes and methods are named to read as sentences; a docstring on
+# `test_rejects_an_empty_upload` would restate the name.
+"app/tests/*" = [
+    "D101", "D102", "D103", "D105",
+    "ARG001", "ARG002", "ARG005",
+    "PLC0415", "BLE001", "SLF001",
+]
+"scripts/*" = ["D103", "PLC0415"]
+# FastAPI's dependency markers (File, Form, Depends) are *designed* to be called
+# in argument defaults; B008 is a false positive for this framework.
+"app/api/routes/*" = ["B008"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.mypy]
+python_version = "3.12"
+warn_unused_ignores = true
+warn_redundant_casts = true
+disallow_untyped_defs = true
+plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+module = ["chromadb.*", "rank_bm25.*", "sentence_transformers.*", "langchain_community.*", "streamlit.*", "reportlab.*"]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["app.tests.*"]
+disallow_untyped_defs = false
