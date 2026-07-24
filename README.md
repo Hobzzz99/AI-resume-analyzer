@@ -176,13 +176,17 @@ pytest
 
 # 📸 Demo
 
-> _Add screenshots or a short GIF of the results dashboard here._
+### Upload — résumé & job description
+![Upload panel](docs/screenshots/01-upload.png)
 
-Suggested captures:
-- The upload panel with a résumé and job description indexed
-- The results dashboard (score meters, matched/missing skills)
-- The **evidence panel** expanded, showing citations back to the résumé
-- The pipeline diagnostics (retrieval trace + stage timings)
+### Results dashboard — scores & skills
+![Results dashboard](docs/screenshots/02-dashboard.png)
+
+### Evidence — every claim cited back to the résumé
+![Evidence panel](docs/screenshots/03-evidence.png)
+
+### Pipeline diagnostics — retrieval trace & stage timings
+![Pipeline diagnostics](docs/screenshots/04-diagnostics.png)
 
 ---
 
