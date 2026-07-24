@@ -6,7 +6,7 @@
 
 | Field            | Value                                            |
 | ---------------- | ------------------------------------------------ |
-| Full Name        | _<add your full name>_                           |
+| Full Name        | Mohab Ahmed Mohy Eldeen Hassan Mostafa Almaaiergy |
 | Project Name     | AI Resume Analyzer — a modular RAG engine        |
 | GitHub Username   | [Hobzzz99](https://github.com/Hobzzz99)          |
 | Challenge Batch  | June–July 2026                                    |
@@ -176,17 +176,23 @@ pytest
 
 # 📸 Demo
 
-### Upload — résumé & job description
+### 1. Upload — résumé & job description
 ![Upload panel](docs/screenshots/01-upload.png)
 
-### Results dashboard — scores & skills
-![Results dashboard](docs/screenshots/02-dashboard.png)
+### 2. Analyze — choose a retrieval strategy
+![Analyze and retrieval strategy](docs/screenshots/02-analyze-strategy.png)
 
-### Evidence — every claim cited back to the résumé
-![Evidence panel](docs/screenshots/03-evidence.png)
+### 3. Results — match scores & skill coverage
+![Scores and skill coverage](docs/screenshots/03-scores-skills.png)
 
-### Pipeline diagnostics — retrieval trace & stage timings
-![Pipeline diagnostics](docs/screenshots/04-diagnostics.png)
+### 4. Recruiter summary, strengths, weaknesses & recommendations
+![Summary and findings](docs/screenshots/04-summary-findings.png)
+
+### 5. Evidence — every claim cited back to the résumé
+![Evidence panel](docs/screenshots/05-evidence.png)
+
+### 6. Pipeline diagnostics — retrieval trace & stage timings
+![Pipeline diagnostics](docs/screenshots/06-diagnostics.png)
 
 ---
 
